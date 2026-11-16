@@ -314,6 +314,7 @@ GameObject:
   - component: {fileID: 599033596}
   - component: {fileID: 599033595}
   - component: {fileID: 599033599}
+  - component: {fileID: 599033600}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -473,6 +474,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Jugador
   velocidad: 5
   fuerzaSalto: 10
+--- !u!95 &599033600
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599033594}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 503f0c32074189f49b25678a0c3bba6a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
