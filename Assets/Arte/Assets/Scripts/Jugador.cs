@@ -8,6 +8,9 @@ public class Jugador : MonoBehaviour
     public float fuerzaSalto = 10f;
 
     private Rigidbody2D rb;
+    private Animator anim;
+    private SpriteRenderer sprite;
+
     private float movimiento;
     private bool quiereSaltar;
     private bool enSuelo;
@@ -17,6 +20,8 @@ public class Jugador : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -36,6 +41,13 @@ public class Jugador : MonoBehaviour
 
         if (teclado.spaceKey.wasPressedThisFrame)
             quiereSaltar = true;
+
+        if (movimiento > 0)
+            sprite.flipX = false;
+        else if (movimiento < 0)
+            sprite.flipX = true;
+
+        anim.SetFloat("Velocidad", Mathf.Abs(movimiento));
     }
 
     void FixedUpdate()
@@ -64,8 +76,17 @@ public class Jugador : MonoBehaviour
                 rb.linearVelocity.x,
                 fuerzaSalto
             );
+
+            enSuelo = false;
+            anim.SetTrigger("Salto");
         }
 
         quiereSaltar = false;
+
+        // Informar al Animator si estamos en el suelo
+        anim.SetBool("EnSuelo", enSuelo);
+
+        // Informar al Animator si estamos subiendo o cayendo
+        anim.SetFloat("VelocidadY", rb.linearVelocity.y);
     }
 }
