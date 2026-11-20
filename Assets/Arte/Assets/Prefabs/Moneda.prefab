@@ -141,4 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc520a63f84845440a243710195ba880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Moneda
-  valor: 10
+  sonidoMoneda: {fileID: 8300000, guid: b2579f043c06e774bb6bacc09b95b5ad, type: 3}
+  volumen: 1

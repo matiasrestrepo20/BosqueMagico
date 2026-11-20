@@ -141,4 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951da29395dc1944ba59beba161e752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pocion
-  valor: 25
+  sonidoPocion: {fileID: 8300000, guid: dda68821856ae64468f116be4828d27f, type: 3}
+  volumen: 0.76
