@@ -1,57 +1,55 @@
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class VidaJugador : MonoBehaviour
 {
-    public int vidasMaximas = 3;
-    public float tiempoProteccion = 1.5f;
+    public int vidasIniciales = 3;
+    public GameObject panelDerrota;
 
     public int VidasActuales { get; private set; }
 
-    private float ultimoGolpe = -999f;
-    private Vector3 inicio;
-    private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private bool invulnerable = false;
+    private bool derrotado = false;
 
     void Start()
     {
-        VidasActuales = vidasMaximas;
-        inicio = transform.position;
-
-        rb = GetComponent<Rigidbody2D>();
+        VidasActuales = vidasIniciales;
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    public void RecibirDanio()
+    void OnCollisionStay2D(Collision2D colision)
     {
-        if (Time.time < ultimoGolpe + tiempoProteccion)
+        if (colision.gameObject.CompareTag("Enemigo"))
+        {
+            RecibirDanio();
+        }
+    }
+
+    void RecibirDanio()
+    {
+        if (invulnerable || derrotado)
             return;
 
-        ultimoGolpe = Time.time;
         VidasActuales--;
 
         Debug.Log("Vidas restantes: " + VidasActuales);
 
         if (VidasActuales <= 0)
         {
-            StopAllCoroutines();
-            sprite.enabled = true;
-
-            VidasActuales = vidasMaximas;
-            rb.linearVelocity = Vector2.zero;
-            transform.position = inicio;
-
-            Debug.Log("Jugador derrotado");
+            PerderJuego();
         }
         else
         {
-            StartCoroutine(Parpadear());
+            StartCoroutine(ProteccionTemporal());
         }
     }
 
-    IEnumerator Parpadear()
+    IEnumerator ProteccionTemporal()
     {
+        invulnerable = true;
+
         for (int i = 0; i < 5; i++)
         {
             sprite.enabled = false;
@@ -61,14 +59,22 @@ public class VidaJugador : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
         }
 
-        sprite.enabled = true;
+        invulnerable = false;
     }
 
-    void OnCollisionStay2D(Collision2D colision)
+    void PerderJuego()
     {
-        if (colision.gameObject.CompareTag("Enemigo"))
+        derrotado = true;
+        sprite.enabled = true;
+
+        if (panelDerrota != null)
         {
-            RecibirDanio();
+            panelDerrota.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Debug.LogWarning("Falta asignar PanelDerrota.");
         }
     }
 }
